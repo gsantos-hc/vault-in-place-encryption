@@ -21,7 +21,7 @@ vault-ipe = "vault_in_place_enc.cli:main"
 distribution = true
 
 [tool.pdm.dev-dependencies]
-dev = ["black<25.0.0,>=24.4.2", "isort<6.0.0,>=5.13.2", "pytest<9.0.0,>=8.2.2"]
+dev = ["ruff>=0.7.1"]
 
 [tool.pdm.build]
 includes = []

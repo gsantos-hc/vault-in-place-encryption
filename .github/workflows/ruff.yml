@@ -1,0 +1,19 @@
+name: Pylint
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PDM on Python ${{ matrix.python-version }}
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: pdm install --dev
+      - name: Analyze code with ruff
+        uses: astral-sh/ruff-action@v1

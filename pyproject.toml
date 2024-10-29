@@ -3,12 +3,19 @@ name = "vault-in-place-encryption"
 version = "0.1.0"
 description = "Python-based CLI for encrypting large data objects using HashiCorp Vault Transit Data Keys."
 authors = [{ name = "Guilherme Santos", email = "gsantos@hashicorp.com" }]
-dependencies = ["hvac<3.0.0,>=2.3.0", "cryptography<43.0.0,>=42.0.8"]
+dependencies = [
+    "click>=8.1.7",
+    "cryptography<43.0.0,>=42.0.8",
+    "hvac<3.0.0,>=2.3.0",
+]
 requires-python = "<4.0,>=3.12"
 readme = "README.md"
 classifiers = [
     "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
 ]
+
+[project.scripts]
+vault-ipe = "vault_in_place_enc.cli:main"
 
 [tool.pdm]
 distribution = true

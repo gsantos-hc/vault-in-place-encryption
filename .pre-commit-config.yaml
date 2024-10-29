@@ -1,0 +1,20 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.1
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+  - repo: local
+    hooks:
+      - id: copywrite-headers
+        name: copywrite - fix headers
+        entry: copywrite headers
+        language: system
+      - id: copywrite-license
+        name: copywrite - fix license
+        entry: copywrite license
+        language: system

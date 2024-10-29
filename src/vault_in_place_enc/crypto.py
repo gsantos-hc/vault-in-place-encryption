@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 """Core cryptographic classes for the Vault In-Place Encryption package."""
 
 import json

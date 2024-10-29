@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 """Command-line interface for the Vault In-Place Encryption package."""
 
 from pathlib import Path

@@ -26,6 +26,9 @@ dev = ["ruff>=0.7.1"]
 [tool.pdm.build]
 includes = []
 
+[tool.ruff.lint]
+extend-select = ["F", "E", "W", "I"]
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"

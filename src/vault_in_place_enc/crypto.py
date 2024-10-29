@@ -50,7 +50,8 @@ class EncryptionMetadata:
         }
 
     def to_json(self) -> str:
-        """Returns a JSON-serialized string representation of the encryption metadata object."""
+        """Returns a JSON-serialized string representation of the encryption metadata
+        object."""
         return json.dumps(self.to_dict())
 
     def save(self, file: Path) -> None:
@@ -83,13 +84,13 @@ def crypto_stream(
     cipher: CipherContext,
     chunk_size: int = 1024,
 ):
-    """Processes a `source` stream through a `cipher` encryptor/decryptor and writes the result
-    to `destination` stream.
+    """Processes a `source` stream through a `cipher` encryptor/decryptor and writes the
+    result to `destination` stream.
 
     Args:
-        source (BufferedReader): The source stream to process.
-        destination (BufferedWriter): The destination stream to write the processed data to.
-        cipher (CipherContext): An encryptor or decryptor object.
+        source (BufferedReader): Source stream to process.
+        destination (BufferedWriter): Destination stream for processed data.
+        cipher (CipherContext): Encryptor or decryptor object.
         chunk_size (int, optional): Bytes to process at a time. Defaults to 1024.
     """
     while True:
@@ -129,14 +130,15 @@ class VaultInPlaceCrypto:
         destination: BufferedWriter,
         metadata: BufferedWriter,
     ) -> None:
-        """Encrypts the contents of a `source` stream with a Vault Transit data key and writes the
-        resulting ciphertext to the `destination` stream. The associated encryption metadata is
-        serialized and written to the `metadata` stream.
+        """Encrypts the contents of a `source` stream with a Vault Transit data key and
+        writes the resulting ciphertext to the `destination` stream. The associated
+        encryption metadata is serialized and written to the `metadata` stream.
 
         Args:
-            source (BufferedReader): Stream of source data to encrypt
-            destination (BufferedWriter): Stream to which resulting ciphertext will be written
-            metadata (BufferedWriter): Stream to which encryption metadata will be written
+            source (BufferedReader): Stream of source data to encrypt.
+            destination (BufferedWriter): Stream to which ciphertext will be written.
+            metadata (BufferedWriter): Stream to which encryption metadata will be
+                written.
 
         Raises:
             TypeError: Source is not a BufferedReader object
@@ -174,13 +176,13 @@ class VaultInPlaceCrypto:
         destination: BufferedWriter,
         metadata: EncryptionMetadata,
     ) -> None:
-        """Decrypts the contents of a `source` stream using the given `metadata` encryption metadata
-        and writes the resulting plaintext to the `destination` stream.
+        """Decrypts the contents of `source` stream using the given `metadata`
+        encryption metadata and writes the resulting plaintext to `destination` stream.
 
         Args:
-            source (BufferedReader): Stream of source data to decrypt
-            destination (BufferedWriter): Stream to which resulting plaintext will be written
-            metadata (EncryptionMetadata): Encryption metadata to use for decrypting `source`
+            source (BufferedReader): Stream of source data to decrypt.
+            destination (BufferedWriter): Stream to which plaintext will be written.
+            metadata (EncryptionMetadata): Encryption metadata to use for decryption.
 
         Raises:
             TypeError: Source is not a BufferedReader object

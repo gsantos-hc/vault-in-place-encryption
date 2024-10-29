@@ -87,7 +87,10 @@ def decrypt(ctx, source: str, meta: str, dest: str) -> None:  # pylint: disable=
     if dest_path.exists():
         click.echo(
             err=True,
-            message=f"Output file '{dest_path}' already exists. Aborting to prevent data loss.",
+            message=(
+                f"Output file '{dest_path}' already exists. Aborting to prevent "
+                "data loss."
+            ),
         )
         return
 

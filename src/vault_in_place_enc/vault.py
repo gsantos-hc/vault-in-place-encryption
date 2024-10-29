@@ -17,7 +17,7 @@ def generate_data_key(
 
     Args:
         client (VaultClient): Instance of `hvac.Client` to use for Vault API calls
-        key_name (str): Name of the Vault Transit key from which to generate the data key
+        key_name (str): Name of the Vault Transit key from which to generate data key
         mount_point (str): Vault Transit engine mount point
         bits (int, optional): Length of encryption data key in bits. Defaults to 256.
 

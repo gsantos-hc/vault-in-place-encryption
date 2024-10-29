@@ -1,0 +1,48 @@
+name: Release SLSA Artifacts
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+jobs:
+  # Build artifacts ------------------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      digests: ${{ steps.hash.outputs.digests }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Install Python, PDM, and project dependencies --------------------------
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pdm install
+
+      # Build wheel ------------------------------------------------------------
+      - name: Build artifacts
+        run: |
+          rm -rf dist
+          pdm build --dest dist
+
+      # Generate provenance subject --------------------------------------------
+      - name: Generate provenance subject
+        id: hash
+        run: |
+          set -euo pipefail
+          echo "digests=$(sha256sum dist/* | base64 -w0)" >> "${GITHUB_OUTPUT}"
+
+  # Release --------------------------------------------------------------------
+  provenance:
+    needs: [build]
+    permissions:
+      actions: read # To read the workflow path.
+      id-token: write # To sign the provenance.
+      contents: write # To add assets to a release.
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
+    with:
+      base64-subjects: "${{ needs.build.outputs.digests }}"
+      upload-assets: true

@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       digests: ${{ steps.hash.outputs.digests }}
-
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -22,11 +23,16 @@ jobs:
       - name: Install dependencies
         run: pdm install
 
-      # Build wheel ------------------------------------------------------------
+      # Build and upload wheel -------------------------------------------------
       - name: Build artifacts
         run: |
           rm -rf dist
           pdm build --dest dist
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: dist/*
+          file_glob: true
 
       # Generate provenance subject --------------------------------------------
       - name: Generate provenance subject

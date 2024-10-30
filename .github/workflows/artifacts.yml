@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       digests: ${{ steps.hash.outputs.digests }}
-
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -22,11 +23,16 @@ jobs:
       - name: Install dependencies
         run: pdm install
 
-      # Build wheel ------------------------------------------------------------
+      # Build and upload wheel -------------------------------------------------
       - name: Build artifacts
         run: |
           rm -rf dist
           pdm build --dest dist
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: dist/*
+          file_glob: true
 
       # Generate provenance subject --------------------------------------------
       - name: Generate provenance subject
@@ -42,7 +48,7 @@ jobs:
       actions: read # To read the workflow path.
       id-token: write # To sign the provenance.
       contents: write # To add assets to a release.
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v1.4.0
+    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
     with:
       base64-subjects: "${{ needs.build.outputs.digests }}"
       upload-assets: true

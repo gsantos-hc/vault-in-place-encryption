@@ -6,7 +6,7 @@
 import json
 import secrets
 from dataclasses import dataclass
-from io import BufferedReader, BufferedWriter
+from io import BufferedReader, BufferedWriter, BytesIO
 from pathlib import Path
 from typing import Optional, Tuple
 
@@ -79,8 +79,8 @@ class EncryptionMetadata:
 
 
 def crypto_stream(
-    source: BufferedReader,
-    destination: BufferedWriter,
+    source: BufferedReader | BytesIO,
+    destination: BufferedWriter | BytesIO,
     cipher: CipherContext,
     chunk_size: int = 1024,
 ):

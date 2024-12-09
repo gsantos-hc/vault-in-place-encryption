@@ -29,6 +29,7 @@ dev = [
 
 [tool.pdm.build]
 includes = []
+excludes = ["tests/**"]
 
 [tool.pdm.version]
 source = "scm"
